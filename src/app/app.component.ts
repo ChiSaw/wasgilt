@@ -8,13 +8,21 @@ import { ApiService } from './api.service';
 })
 export class AppComponent {
   title = 'WasGilt';
-  dataLoaded: boolean;
+  dataStage: string;
   previousDays = 0;
   stateToAbbr = {};
 
   incidenceData;
 
-  onClick($event) {
+  onLocationClick($event) {
+    this.dataStage = 'loading';
+    this.getData().then((result) => {
+      this.incidenceData = result;
+      this.dataStage = 'loaded';
+    });
+  }
+
+  onPLZClick($event) {
 
   }
 
@@ -24,7 +32,7 @@ export class AppComponent {
 
 
   constructor(public api: ApiService) {
-    this.dataLoaded = false;
+    this.dataStage = 'initial';
     this.previousDays = 30;
     this.stateToAbbr = {
       'Baden-Württemberg': 'BW',
@@ -44,19 +52,15 @@ export class AppComponent {
       'Schleswig-Holstein': 'SH',
       Thüringen: 'TH'
     };
-    this.getData().then((result) => {
-      this.incidenceData = result;
-      this.dataLoaded = true;
-    });
   }
 
   async getData() {
      try {
       const location = await this.getPosition();
       if (location) {
-        const result = await this.api.get_districts(location).toPromise();
+        const result: any = await this.api.get_districts(location).toPromise();
         const attr  = result.features[0].attributes;
-        const historicalData = await this.api.get_districts_history(attr.RS, this.previousDays).toPromise();
+        const historicalData: any = await this.api.get_districts_history(attr.RS, this.previousDays).toPromise();
         const aggregate = historicalData.features.map(f => f.attributes).reduce((dict, feature) => {
           dict[feature.Meldedatum] = (dict[feature.Meldedatum] | 0) + feature.AnzahlFall;
           return dict;
