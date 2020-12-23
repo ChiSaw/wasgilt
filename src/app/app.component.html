@@ -1,0 +1,30 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div class="container">
+<div style="text-align:center">
+  <h1>
+    Was gilt - im Moment für Corona!
+  </h1>
+</div>
+<ng-container *ngIf="this.dataLoaded == true; else loading">
+  <div>
+    Regeln für {{ this.incidenceData.areaName }}, {{ this.incidenceData.bundesland }}
+  </div>
+  <div>
+    Aktueller Inzidenzwert: {{ this.incidenceData.incidence }}
+  </div>
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="basic-addon1">PLZ</span>
+    </div>
+    <input type="text" class="form-control" placeholder="Deine PLZ" aria-label="PLZ" aria-describedby="basic-addon1">
+  </div>
+  <button type="button" class="btn btn-info" 
+          (click)="this.onClick($event)">Regeln anzeigen</button>
+</ng-container>
+<ng-template #loading>
+  Position wird bestimmt und Regeln werden geladen...
+</ng-template>
+<div>
+  Diese Informationen sind rechtlich unverbindlich, die Urheber haften für keine veralteten oder mögliche Fehlinformationen.
+</div>
+</div>
