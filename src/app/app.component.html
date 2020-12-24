@@ -1,4 +1,3 @@
-<!--The content below is only a placeholder and can be replaced.-->
 <div class="container">
   <div class="row mb-3">
     <div class="col-sm">
@@ -8,56 +7,5 @@
 </div>
 </div>
 
-<ng-container [ngSwitch]="this.dataStage">
-  <div *ngSwitchCase="'loaded'">
-  <div>
-    Regeln für {{ this.incidenceData.areaName }}, {{ this.incidenceData.bundesland }}
-  </div>
-  <div>
-    Aktueller Inzidenzwert: {{ this.incidenceData.incidence }}
-  </div>
-</div>
-
-
-  <div *ngSwitchCase="'initial'">
-    <div class="row">
-      <p>1. Standort automatisch bestimmen.</p>
-    </div>
-    <div class="row mb-3">
-      <div class="col-sm">
-    <button type="button" class="btn btn-info" 
-    (click)="this.onLocationClick($event)">Standort bestimmen</button>
-    </div>
-  </div>
-
-  <div class="row">
-    <p>2. Standort per Postleitzahl ermitteln.</p>
-  </div>
-    <div class="row mb-3">
-  <div class="col-sm-6">
-    <div class="input-group mb-3">
-      <div class="input-group-prepend">
-        <span class="input-group-text" id="basic-addon1">PLZ</span>
-      </div>
-      <input type="text" class="form-control" placeholder="Deine PLZ" aria-label="PLZ" aria-describedby="basic-addon1">
-    </div>
-  </div>
-  <div class="col-sm-6">
-    <button type="button" class="btn btn-info" 
-            (click)="this.onPLZClick($event)">Regeln anzeigen</button>
-  </div>
-  </div>
-  
-  </div>
-  
-  <div *ngSwitchCase="'loading'">
-    Position wird bestimmt und Regeln werden geladen...
-  </div>
-</ng-container>
-
-<div>
-  <p><small>Diese Informationen sind unverbindlich. Die Urheber haften für keine veralteten oder fehlerhaften Informationen.</small></p>
-  <p><small>2020 Christian Hülsemeyer</small></p>
-
-</div>
+<router-outlet></router-outlet>
 </div>

@@ -6,15 +6,25 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ButtonsModule } from 'ngx-bootstrap';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
+//import { AngularFireModule } from '@angular/fire';
+//import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { environment } from '../environments/environment';
+
+import { UpdateComponent } from './update/update.component';
+import { RulesComponent } from './rules/rules.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    UpdateComponent,
+    RulesComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
+    //AngularFireModule.initializeApp(environment.firebase, 'wasgilt'),
+    //AngularFireDatabaseModule,
     ButtonsModule.forRoot()
   ],
   providers: [],
