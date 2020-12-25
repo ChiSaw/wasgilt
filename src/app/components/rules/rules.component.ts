@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from './../api.service';
+import { ApiService } from 'src/app/services/api.service';
+import { RulesSet } from 'src/app/interfaces/rules';
+import ZipcodesGermany from 'src/assets/zipcodes.de.json';
+
 // Licence: Robert Koch-Institut (RKI), dl-de/by-2-0
 
 // Thanks to @rphl (https://github.com/rphl) and @tzschies (https://github.com/tzschies) for their inspiring work on this widget. See https://gist.github.com/rphl/0491c5f9cb345bf831248732374c4ef5 and https://gist.github.com/tzschies/563fab70b37609bc8f2f630d566bcbc9.
@@ -12,26 +15,78 @@ import { ApiService } from './../api.service';
 export class RulesComponent implements OnInit {
   dataStage: string;
   previousDays = 0;
-  stateToAbbr = {};
+  states = {};
+  plz: string;
 
   incidenceData;
 
-  onLocationClick($event) {
+  rules: RulesSet;
+
+  async onLocationClick($event) {
     this.dataStage = 'loading';
-    this.getData().then((result) => {
+    const location: Coordinates = await this.getPosition();
+    this.getData(location).then((result) => {
       this.incidenceData = result;
       this.dataStage = 'loaded';
     });
   }
 
-  onPLZClick($event) {
-
+  onPLZClick(event: Event) {
+    let data = this.getCityData(this.plz);
+    if (data.community_code != "-1") {
+      let location: Coordinates = {
+        accuracy: Number(30),
+        altitude: null,
+        altitudeAccuracy: null,
+        heading: null,
+        longitude: Number(data.longitude),
+        latitude: Number(data.latitude),
+        speed: null,
+      }
+      this.getData(location).then((result) => {
+        this.incidenceData = result;
+        this.dataStage = 'loaded';
+      });
+    }
   }
 
   constructor(public api: ApiService) {
+    this.rules = {
+      lowerIncidence: {
+        value: 0
+      },
+      upperIncidence: {
+        value: 0
+      },
+      contactsInside: {
+        where: '',
+        contactsNumber: 0,
+        remarks: ''
+      },
+      contactsOutside: {
+        where: '',
+        contactsNumber: 0,
+        remarks: ''
+      },
+      importantAnnouncement: {
+        rule: ''
+      },
+      specialRules: {
+        rule: ''
+      },
+      masks: {
+        isMasks: false,
+        where: ''
+      },
+      closedStores: [{ store: '' }],
+      closedInstitutions: [{ institution: '' }],
+      goingOutBan: {
+        rule: ''
+      }
+    }
     this.dataStage = 'initial';
     this.previousDays = 30;
-    this.stateToAbbr = {
+    this.states = {
       'Baden-Württemberg': 'BW',
       Bayern: 'BY',
       Berlin: 'BE',
@@ -55,10 +110,10 @@ export class RulesComponent implements OnInit {
   }
 
 
-  async getData() {
+  async getData(location: Coordinates) {
     try {
-      const location = await this.getPosition();
       if (location) {
+        console.log(location)
         const result: any = await this.api.get_districts(location).toPromise();
         const attr = result.features[0].attributes;
         const historicalData: any = await this.api.get_districts_history(attr.RS, this.previousDays).toPromise();
@@ -77,7 +132,7 @@ export class RulesComponent implements OnInit {
           incidenceBySide:
             attr.cases7_bl_per_100k.toFixed(0),
           areaNameBySide:
-            this.stateToAbbr[attr.BL],
+            this.states[attr.BL],
           bundesland: attr.BL,
           timeline
         };
@@ -90,7 +145,7 @@ export class RulesComponent implements OnInit {
 
 
   getPosition = () => {
-    return new Promise((resolve, reject) => {
+    return new Promise<Coordinates>((resolve, reject) => {
       navigator.geolocation.getCurrentPosition((position) => {
         resolve(position.coords);
       }, (err) => {
@@ -101,5 +156,19 @@ export class RulesComponent implements OnInit {
 
   sum(a, b) {
     return a + b;
+  }
+
+  getCityData(zipcode: string) {
+    console.log(ZipcodesGermany[0])
+    for (let k = ZipcodesGermany.length - 1; k >= 0; --k) {
+      if (ZipcodesGermany[k].zipcode == zipcode) {
+        return ZipcodesGermany[k];
+      }
+    }
+    return {
+      community_code: "-1",
+      longitude: 0,
+      latitude: 0
+    }
   }
 }

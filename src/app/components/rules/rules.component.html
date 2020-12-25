@@ -2,12 +2,21 @@
 
 <ng-container [ngSwitch]="this.dataStage">
   <div *ngSwitchCase="'loaded'">
-  <div>
+
+  <h4>
     Regeln für {{ this.incidenceData.areaName }}, {{ this.incidenceData.bundesland }}
-  </div>
-  <div>
+  </h4>
+  <ul class="list-group">
+  <li class="list-group-item">
     Aktueller Inzidenzwert: {{ this.incidenceData.incidence }}
-  </div>
+  </li>
+    <li class="list-group-item">
+      <app-contact-rule [rule]="this.rules.contactsInside"></app-contact-rule>
+    </li>
+    <li class="list-group-item">
+      <app-contact-rule [rule]="this.rules.contactsOutside"></app-contact-rule>
+    </li>
+  </ul>
 </div>
 
 
@@ -31,7 +40,7 @@
       <div class="input-group-prepend">
         <span class="input-group-text" id="basic-addon1">PLZ</span>
       </div>
-      <input type="text" class="form-control" placeholder="Deine PLZ" aria-label="PLZ" aria-describedby="basic-addon1">
+      <input type="text" class="form-control" [(ngModel)]="plz" placeholder="Postleitzahl" aria-label="PLZ" aria-describedby="basic-addon1">
     </div>
   </div>
   <div class="col-sm-6">
@@ -46,9 +55,3 @@
     Position wird bestimmt und Regeln werden geladen...
   </div>
 </ng-container>
-
-<div>
-  <p><small>Diese Informationen sind unverbindlich. Die Urheber haften für keine veralteten oder fehlerhaften Informationen.</small></p>
-  <p><small>2020 Christian Hülsemeyer</small></p>
-
-</div>
