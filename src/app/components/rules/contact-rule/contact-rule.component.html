@@ -1,13 +1,16 @@
 <div class="row">
-    <div class="col-sm-4 my-auto">
-        <p>Kontakte {{ this.rule.where }}</p>
+  <div class="col-sm-1 my-auto">
+    <img class="mr-3 rule-icon" src="assets/audience.png" alt="Contact" />
+  </div>
+  <div class="col-sm-4 my-auto">
+    <p class="my-auto">Kontakte {{ this.rule.where }}</p>
+  </div>
+  <div class="col-sm-6">
+    <div class="row ml-1">
+        <p class="my-auto">{{ this.rule.contactsNumber }}</p>
     </div>
-    <div class="col-sm-8">
-        <div class="row">
-            {{ this.rule.contactsNumber }}
-        </div>
-        <div class="row">
-            {{ this.rule.remarks }}
-        </div>
+    <div class="row ml-1">
+        <p class="my-auto">{{ this.rule.remarks }}</p>
     </div>
+  </div>
 </div>

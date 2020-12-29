@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NgbButtonsModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbButtonsModule, NgbDropdownModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { environment } from '../environments/environment';
@@ -20,6 +20,8 @@ import { ClosedInstitutionsComponent } from './components/rules/closed-instituti
 import { GoingOutBanComponent } from './components/rules/going-out-ban/going-out-ban.component';
 import { ImportantAnnouncementComponent } from './components/rules/important-announcement/important-announcement.component';
 import { MasksRuleComponent } from './components/rules/masks-rule/masks-rule.component';
+import { KeysPipe } from './components/update/update.pipe';
+import { IncidenceValuesComponent } from './components/update/incidence-values/incidence-values.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,9 @@ import { MasksRuleComponent } from './components/rules/masks-rule/masks-rule.com
     ClosedInstitutionsComponent,
     GoingOutBanComponent,
     ImportantAnnouncementComponent,
-    MasksRuleComponent
+    MasksRuleComponent,
+    KeysPipe,
+    IncidenceValuesComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,7 +46,9 @@ import { MasksRuleComponent } from './components/rules/masks-rule/masks-rule.com
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
-    NgbButtonsModule
+    NgbButtonsModule,
+    NgbDropdownModule,
+    NgbNavModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

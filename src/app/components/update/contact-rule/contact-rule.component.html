@@ -1,14 +1,24 @@
 <div class="row">
-    <div class="col-sm-4 my-auto">
-    </div>
-    <div class="col-sm-8">
-        <div class="row">
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="basic-addon1">PLZ</span>
-                </div>
-                <input type="text" class="form-control" [(ngModel)]="this.rule.contactsNumber" placeholder="Maximale Kontakte" aria-label="contacts" aria-describedby="basic-addon1">
-              </div>
+  <div class="col-sm-4 my-auto">
+    <p class="mb-0">Kontakte {{ this.rule.where }}</p>
+  </div>
+  <div class="col-sm-8">
+    <div class="row">
+      <div class="input-group my-auto">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1"
+            >Maximale Kontakte</span
+          >
         </div>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="rule.contactsNumber"
+          placeholder="Maximale Kontakte"
+          aria-label="contacts"
+          aria-describedby="basic-addon1"
+        />
+      </div>
     </div>
+  </div>
 </div>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
-import { RulesSet } from 'src/app/interfaces/rules';
+import { RulesSet, initIncidenceRulesSet } from 'src/app/interfaces/rules';
+import { ActivatedRoute, Router } from '@angular/router';
 import ZipcodesGermany from 'src/assets/zipcodes.de.json';
 
 // Licence: Robert Koch-Institut (RKI), dl-de/by-2-0
@@ -17,61 +18,17 @@ export class RulesComponent implements OnInit {
   previousDays = 0;
   states = {};
   plz: string;
+  selectedRSCode: string;
+  activeIncidenceIndex: number;
 
   incidenceData;
 
   rules: RulesSet;
 
-  async onLocationClick($event) {
-    this.dataStage = 'loading';
-    const location: Coordinates = await this.getPosition();
-    this.getData(location).then((result) => {
-      this.incidenceData = result;
-      this.dataStage = 'loaded';
-    });
-  }
-
-  onPLZClick(event: Event) {
-    let data = this.getCityData(this.plz);
-    if (data.community_code != "-1") {
-      let location: Coordinates = {
-        accuracy: Number(30),
-        altitude: null,
-        altitudeAccuracy: null,
-        heading: null,
-        longitude: Number(data.longitude),
-        latitude: Number(data.latitude),
-        speed: null,
-      }
-      this.getData(location).then((result) => {
-        this.incidenceData = result;
-        this.dataStage = 'loaded';
-      });
-    }
-  }
-
-  constructor(public api: ApiService) {
+  constructor(public api: ApiService, private route: ActivatedRoute, private router: Router) {
+    this.activeIncidenceIndex = 0;
     this.rules = {
-      lowerIncidence: {
-        value: 0
-      },
-      upperIncidence: {
-        value: 0
-      },
-      contactsInside: {
-        where: '',
-        contactsNumber: 0,
-        remarks: ''
-      },
-      contactsOutside: {
-        where: '',
-        contactsNumber: 0,
-        remarks: ''
-      },
       importantAnnouncement: {
-        rule: ''
-      },
-      specialRules: {
         rule: ''
       },
       masks: {
@@ -80,10 +37,8 @@ export class RulesComponent implements OnInit {
       },
       closedStores: [{ store: '' }],
       closedInstitutions: [{ institution: '' }],
-      goingOutBan: {
-        rule: ''
-      }
-    }
+      incidenceRules: [initIncidenceRulesSet()]
+    };
     this.dataStage = 'initial';
     this.previousDays = 30;
     this.states = {
@@ -107,8 +62,63 @@ export class RulesComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.updateRoute();
   }
 
+  updateRoute() {
+    this.route.queryParamMap
+      .subscribe((params) => {
+        if (params.has('verwaltungsid') && this.selectedRSCode != params.get('verwaltungsid')) {
+          this.selectedRSCode = params.get('verwaltungsid');
+          let data = this.getCityDataFromRS(this.selectedRSCode);
+          if (data.community_code != "-1") {
+            let location: Coordinates = {
+              accuracy: Number(30),
+              altitude: null,
+              altitudeAccuracy: null,
+              heading: null,
+              longitude: Number(data.longitude),
+              latitude: Number(data.latitude),
+              speed: null,
+            }
+            this.loadData(location);
+          }          
+          console.log('New community: ' + params.get('verwaltungsid'))
+        }
+      })
+  }
+
+  async onLocationClick($event) {
+    this.dataStage = 'loading';
+    const location: Coordinates = await this.getPosition();
+    this.loadData(location);
+  }
+
+  onPLZClick(event: Event) {
+    let data = this.getCityDataFromZip(this.plz);
+    if (data.community_code != "-1") {
+      let location: Coordinates = {
+        accuracy: Number(30),
+        altitude: null,
+        altitudeAccuracy: null,
+        heading: null,
+        longitude: Number(data.longitude),
+        latitude: Number(data.latitude),
+        speed: null,
+      }
+      this.loadData(location);
+    }
+  }
+
+  loadData(location: Coordinates) {
+    this.getData(location).then((result) => {
+      this.incidenceData = result;
+      this.activeIncidenceIndex = this.getIncidenceIndex(this.incidenceData.incidence);
+      this.selectedRSCode = result.rs;
+      this.dataStage = 'loaded';
+      this.router.navigate(['/'], { queryParams: { verwaltungsid: this.selectedRSCode } });
+    });
+  }
 
   async getData(location: Coordinates) {
     try {
@@ -134,7 +144,8 @@ export class RulesComponent implements OnInit {
           areaNameBySide:
             this.states[attr.BL],
           bundesland: attr.BL,
-          timeline
+          timeline,
+          rs: attr.RS
         };
       }
       return { error: 'Standort nicht verfügbar.' };
@@ -142,7 +153,6 @@ export class RulesComponent implements OnInit {
       return { error: 'Fehler bei Datenabruf.' };
     }
   }
-
 
   getPosition = () => {
     return new Promise<Coordinates>((resolve, reject) => {
@@ -158,7 +168,7 @@ export class RulesComponent implements OnInit {
     return a + b;
   }
 
-  getCityData(zipcode: string) {
+  getCityDataFromZip(zipcode: string) {
     console.log(ZipcodesGermany[0])
     for (let k = ZipcodesGermany.length - 1; k >= 0; --k) {
       if (ZipcodesGermany[k].zipcode == zipcode) {
@@ -170,5 +180,29 @@ export class RulesComponent implements OnInit {
       longitude: 0,
       latitude: 0
     }
+  }
+
+  getCityDataFromRS(rscode: string) {
+    console.log(ZipcodesGermany[0])
+    for (let k = ZipcodesGermany.length - 1; k >= 0; --k) {
+      if (ZipcodesGermany[k].community_code == rscode) {
+        return ZipcodesGermany[k];
+      }
+    }
+    return {
+      community_code: "-1",
+      longitude: 0,
+      latitude: 0
+    }
+  }
+
+  getIncidenceIndex(incidence: number) {
+    let incidenceIndex = 0;
+    for(let i = 0; i < this.rules.incidenceRules.length; i++) {
+      if(incidence >= this.rules.incidenceRules[i].fromIncidence.value) {
+        incidenceIndex = i;
+      }
+    }
+    return incidenceIndex;
   }
 }

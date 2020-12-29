@@ -2,23 +2,40 @@
 
 <ng-container [ngSwitch]="this.dataStage">
   <div *ngSwitchCase="'loaded'">
-
-  <h4>
-    Regeln für {{ this.incidenceData.areaName }}, {{ this.incidenceData.bundesland }}
-  </h4>
-  <ul class="list-group">
-  <li class="list-group-item">
-    Aktueller Inzidenzwert: {{ this.incidenceData.incidence }}
-  </li>
-    <li class="list-group-item">
-      <app-contact-rule [rule]="this.rules.contactsInside"></app-contact-rule>
-    </li>
-    <li class="list-group-item">
-      <app-contact-rule [rule]="this.rules.contactsOutside"></app-contact-rule>
-    </li>
-  </ul>
-</div>
-
+    <h4>
+      Regeln für {{ this.incidenceData.areaName }},
+      {{ this.incidenceData.bundesland }}
+    </h4>
+    <ul class="list-group">
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-sm-1 my-auto">
+            <p class="my-auto">RKI</p>
+          </div>
+          <div class="col-sm-4 my-auto">
+            <p class="my-auto">Aktueller Inzidenzwert</p>
+          </div>
+          <div class="col-sm-6">
+            <p class="my-auto">{{ this.incidenceData.incidence }}</p>
+          </div>
+        </div>
+      </li>
+      <li class="list-group-item">
+        <app-contact-rule
+          [rule]="
+            this.rules.incidenceRules[this.activeIncidenceIndex].contactsInside
+          "
+        ></app-contact-rule>
+      </li>
+      <li class="list-group-item">
+        <app-contact-rule
+          [rule]="
+            this.rules.incidenceRules[this.activeIncidenceIndex].contactsOutside
+          "
+        ></app-contact-rule>
+      </li>
+    </ul>
+  </div>
 
   <div *ngSwitchCase="'initial'">
     <div class="row">
@@ -26,31 +43,47 @@
     </div>
     <div class="row mb-3">
       <div class="col-sm">
-    <button type="button" class="btn btn-info" 
-    (click)="this.onLocationClick($event)">Standort bestimmen</button>
+        <button
+          type="button"
+          class="btn btn-info"
+          (click)="this.onLocationClick($event)"
+        >
+          Standort bestimmen
+        </button>
+      </div>
+    </div>
+
+    <div class="row">
+      <p>2. Standort per Postleitzahl ermitteln.</p>
+    </div>
+    <div class="row mb-3">
+      <div class="col-sm-6">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">PLZ</span>
+          </div>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="plz"
+            placeholder="Postleitzahl"
+            aria-label="PLZ"
+            aria-describedby="basic-addon1"
+          />
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <button
+          type="button"
+          class="btn btn-info"
+          (click)="this.onPLZClick($event)"
+        >
+          Regeln anzeigen
+        </button>
+      </div>
     </div>
   </div>
 
-  <div class="row">
-    <p>2. Standort per Postleitzahl ermitteln.</p>
-  </div>
-    <div class="row mb-3">
-  <div class="col-sm-6">
-    <div class="input-group mb-3">
-      <div class="input-group-prepend">
-        <span class="input-group-text" id="basic-addon1">PLZ</span>
-      </div>
-      <input type="text" class="form-control" [(ngModel)]="plz" placeholder="Postleitzahl" aria-label="PLZ" aria-describedby="basic-addon1">
-    </div>
-  </div>
-  <div class="col-sm-6">
-    <button type="button" class="btn btn-info" 
-            (click)="this.onPLZClick($event)">Regeln anzeigen</button>
-  </div>
-  </div>
-  
-  </div>
-  
   <div *ngSwitchCase="'loading'">
     Position wird bestimmt und Regeln werden geladen...
   </div>

@@ -1,26 +1,114 @@
 <!--The content below is only a placeholder and can be replaced.-->
 
 <ng-container>
-
-  <ul class="list-group">
-  <li class="list-group-item">
-    <div class="dropdown">
-      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Dropdown button
+  <ng-container
+    *ngIf="
+      this.selectedState == undefined || this.selectedState == '';
+      else edit
+    "
+  >
+    <div class="list-group">
+      <button
+        type="button"
+        class="list-group-item list-group-item-action"
+        *ngFor="let state of this.states | keys"
+        (click)="this.onStateClicked(state.value)"
+      >
+        {{ state.key }}
       </button>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item" href="#">Action</a>
-        <a class="dropdown-item" href="#">Another action</a>
-        <a class="dropdown-item" href="#">Something else here</a>
+    </div>
+  </ng-container>
+
+  <ng-template #edit>
+    <div class="row mb-3">
+      <h4 class="ml-3 my-auto">Regeln ändern für</h4>
+      <div ngbDropdown class="d-inline-block mx-2">
+        <button
+          class="btn btn-outline-primary"
+          id="stateSelection"
+          ngbDropdownToggle
+        >
+          {{ swap(this.states)[this.selectedState] }}
+        </button>
+        <div ngbDropdownMenu aria-labelledby="stateSelection">
+          <button
+            *ngFor="let state of this.states | keys"
+            (click)="this.onStateClicked(state.value)"
+            ngbDropdownItem
+          >
+            {{ state.key }}
+          </button>
+        </div>
       </div>
     </div>
-  </li>
-    <li class="list-group-item">
-      <app-contact-rule-edit ([rule])="this.rules.contactsInside"></app-contact-rule-edit>
-    </li>
-    <li class="list-group-item">
-      <app-contact-rule-edit ([rule])="this.rules.contactsOutside"></app-contact-rule-edit>
-    </li>
-  </ul>
-</ng-container>
+    <div class="row">
+      <ul class="mx-1 list-group">
+        <li class="list-group-item">
+          <app-incidence-values
+            [incidenceValues]="this.incidenceValues"
+            (incidenceValuesChange)="this.onIncidenceValuesChange($event)"
+          ></app-incidence-values>
+        </li>
+      </ul>
+    </div>
+    <div class="row mt-5">
+      <div class="mx-3 my-auto">Regeln ab Inzidenz</div>
+      <div class="mx-1 d-inline-block">
+        <ul
+          ngbNav
+          #nav="ngbNav"
+          [(activeId)]="this.activeRulesIndex"
+          class="nav-tabs"
+        >
+          <li
+            *ngFor="let incidenceValue of this.incidenceValues.values; let i = index"
+            [ngbNavItem]="i"
+          >
+            <a ngbNavLink>> {{ incidenceValue }}</a>
+            <ng-template ngbNavContent>
+              <ul class="list-group">
+                <li class="list-group-item">
+                  <app-contact-rule-edit
+                    [rule]="
+                      this.rules.incidenceRules[i]
+                        .contactsInside
+                    "
+                    (ruleChange)="
+                      (this.rules.incidenceRules[i]
+                        .contactsInside)
+                    "
+                  ></app-contact-rule-edit>
+                </li>
+                <li class="list-group-item">
+                  <app-contact-rule-edit
+                    [rule]="
+                      this.rules.incidenceRules[i]
+                        .contactsOutside
+                    "
+                    (ruleChange)="
+                      (this.rules.incidenceRules[i]
+                        .contactsOutside)
+                    "
+                  ></app-contact-rule-edit>
+                </li>
+              </ul>
+            </ng-template>
+          </li>
+        </ul>
+      </div>
+    </div>
 
+    <div [ngbNavOutlet]="nav" class="mt-0"></div>
+    <div class="row">
+      <div class="col">
+        <button
+          type="button"
+          class="btn btn-success my-4 float-right"
+          (click)="onUpdateData()"
+        >
+          Speichern
+        </button>
+      </div>
+    </div>
+  </ng-template>
+</ng-container>

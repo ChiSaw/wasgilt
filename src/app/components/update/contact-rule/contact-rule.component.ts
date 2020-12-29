@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { ContactsRule } from 'src/app/interfaces/rules';
 
 @Component({
@@ -8,7 +8,9 @@ import { ContactsRule } from 'src/app/interfaces/rules';
 })
 export class ContactRuleEditComponent implements OnInit {
   @Input() rule: ContactsRule;
-  constructor() { }
+  @Output() ruleChange = new EventEmitter<ContactsRule>();
+  constructor() {
+  }
 
   ngOnInit(): void {
   }
