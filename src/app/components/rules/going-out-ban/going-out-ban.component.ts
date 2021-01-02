@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { GoingOutBan } from 'src/app/interfaces/rules';
 
 @Component({
   selector: 'app-going-out-ban',
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./going-out-ban.component.css']
 })
 export class GoingOutBanComponent implements OnInit {
-
+  @Input() rule: GoingOutBan;
   constructor() { }
 
   ngOnInit(): void {

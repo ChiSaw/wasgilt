@@ -16,9 +16,23 @@
             <p class="my-auto">Aktueller Inzidenzwert</p>
           </div>
           <div class="col-sm-6">
-            <p class="my-auto">{{ this.incidenceData.incidence }}</p>
+            <p class="my-auto">{{ this.incidenceData.incidence }} (Regeln gelten ab Inzidenz > {{ this.rules.incidenceRules[this.activeIncidenceIndex].fromIncidence.value }}) </p>
           </div>
         </div>
+      </li>
+      <li class="list-group-item">
+        <app-important-announcement
+          [rule]="
+            this.rules.importantAnnouncement
+          "
+        ></app-important-announcement>
+      </li>
+      <li class="list-group-item">
+        <app-going-out-ban
+          [rule]="
+            this.rules.incidenceRules[this.activeIncidenceIndex].goingOutBan
+          "
+        ></app-going-out-ban>
       </li>
       <li class="list-group-item">
         <app-contact-rule
@@ -33,6 +47,34 @@
             this.rules.incidenceRules[this.activeIncidenceIndex].contactsOutside
           "
         ></app-contact-rule>
+      </li>
+      <li class="list-group-item">
+        <app-closed-institutions
+          [rules]="
+            this.rules.closedInstitutions
+          "
+        ></app-closed-institutions>
+      </li>
+      <li class="list-group-item">
+        <app-closed-stores
+          [rules]="
+            this.rules.closedStores
+          "
+        ></app-closed-stores>
+      </li>
+      <li class="list-group-item">
+        <app-masks-rule
+          [rule]="
+            this.rules.masks
+          "
+        ></app-masks-rule>
+      </li>
+      <li class="list-group-item">
+        <app-special-rules
+          [rule]="
+            this.rules.incidenceRules[this.activeIncidenceIndex].specialRules
+          "
+        ></app-special-rules>
       </li>
     </ul>
   </div>

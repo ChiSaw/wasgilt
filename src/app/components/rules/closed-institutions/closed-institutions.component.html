@@ -1,1 +1,14 @@
-<p>closed-institutions works!</p>
+<div class="row">
+    <div class="col-sm-1 my-auto">
+      <img class="mr-3 rule-icon" src="assets/university.png" alt="Contact" />
+    </div>
+    <div class="col-sm-4 my-auto">
+      <p class="my-auto">Geschlossene Institutionen</p>
+    </div>
+    <div class="col-sm-6">
+      <div *ngFor="let rule of this.rules" class="row ml-1">
+          <p class="my-auto">{{ rule.institution }}</p>
+      </div>
+    </div>
+  </div>
+  

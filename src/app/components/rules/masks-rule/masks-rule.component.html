@@ -1,1 +1,15 @@
-<p>masks-rule works!</p>
+<div class="row">
+    <div class="col-sm-1 my-auto">
+      <img class="mr-3 rule-icon" src="assets/medical-mask.png" alt="Ban" />
+    </div>
+    <div class="col-sm-4 my-auto">
+      <p class="my-auto">Maske</p>
+    </div>
+    <div class="col-sm-6">
+      <div class="row ml-1">
+          <p *ngIf="this.rule.isMasks == true" class="my-auto">Ja, {{this.rule.where}}</p>
+          <p *ngIf="this.rule.isMasks == false" class="my-auto">Nein</p>
+      </div>
+    </div>
+  </div>
+  
