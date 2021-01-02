@@ -1,0 +1,30 @@
+<div class="row">
+    <div class="col-sm-4 my-auto">
+      <p class="mb-0">Masken</p>
+    </div>
+    <div class="col-sm-8">
+        <div class="row">
+            <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="rule.isMasks">
+                <label ngbButtonLabel class="btn-primary">
+                  <input ngbButton type="radio" [value]="true"> Ja
+                </label>
+                <label ngbButtonLabel class="btn-primary">
+                  <input ngbButton type="radio" value="false"> Nein
+                </label>
+              </div>
+        </div>
+      <div class="row">
+        <div class="input-group my-auto">
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="rule.where"
+            placeholder="Wo gilt die Maskenpflicht?"
+            aria-label="masksrule"
+            aria-describedby="basic-addon1"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  

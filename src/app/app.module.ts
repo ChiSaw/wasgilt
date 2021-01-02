@@ -15,14 +15,19 @@ import { RulesComponent } from './components/rules/rules.component';
 import { ContactRuleComponent } from './components/rules/contact-rule/contact-rule.component';
 import { ContactRuleEditComponent } from './components/update/contact-rule/contact-rule.component';
 import { SpecialRulesComponent } from './components/rules/special-rules/special-rules.component';
+import { SpecialRulesEditComponent } from './components/update/special-rules/special-rules.component';
 import { ClosedStoresComponent } from './components/rules/closed-stores/closed-stores.component';
+import { ClosedStoresEditComponent } from './components/update/closed-stores/closed-stores.component';
 import { ClosedInstitutionsComponent } from './components/rules/closed-institutions/closed-institutions.component';
+import { ClosedInstitutionsEditComponent } from './components/update/closed-institutions/closed-institutions.component';
 import { GoingOutBanComponent } from './components/rules/going-out-ban/going-out-ban.component';
+import { GoingOutBanEditComponent } from './components/update/going-out-ban/going-out-ban.component';
 import { ImportantAnnouncementComponent } from './components/rules/important-announcement/important-announcement.component';
+import { ImportantAnnouncementEditComponent } from './components/update/important-announcement/important-announcement.component';
 import { MasksRuleComponent } from './components/rules/masks-rule/masks-rule.component';
+import { MasksRuleEditComponent } from './components/update/masks-rule/masks-rule.component';
 import { KeysPipe } from './components/update/update.pipe';
 import { IncidenceValuesComponent } from './components/update/incidence-values/incidence-values.component';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,6 +43,12 @@ import { IncidenceValuesComponent } from './components/update/incidence-values/i
     MasksRuleComponent,
     KeysPipe,
     IncidenceValuesComponent,
+    ClosedInstitutionsEditComponent,
+    SpecialRulesEditComponent,
+    ClosedStoresEditComponent,
+    GoingOutBanEditComponent,
+    ImportantAnnouncementEditComponent,
+    MasksRuleEditComponent,
   ],
   imports: [
     BrowserModule,

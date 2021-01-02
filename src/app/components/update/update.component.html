@@ -61,35 +61,64 @@
           class="nav-tabs"
         >
           <li
-            *ngFor="let incidenceValue of this.incidenceValues.values; let i = index"
+            *ngFor="
+              let incidenceValue of this.incidenceValues.values;
+              let i = index
+            "
             [ngbNavItem]="i"
           >
             <a ngbNavLink>> {{ incidenceValue }}</a>
             <ng-template ngbNavContent>
               <ul class="list-group">
                 <li class="list-group-item">
+                  <app-important-announcement-edit
+                    [rule]="this.rules.importantAnnouncement"
+                    (ruleChange)="(this.rules.importantAnnouncement)"
+                  ></app-important-announcement-edit>
+                </li>
+                <li class="list-group-item">
+                  <app-going-out-ban-edit
+                    [rule]="this.rules.incidenceRules[i].goingOutBan"
+                    (ruleChange)="(this.rules.incidenceRules[i].goingOutBan)"
+                  ></app-going-out-ban-edit>
+                </li>
+                <li class="list-group-item">
                   <app-contact-rule-edit
-                    [rule]="
-                      this.rules.incidenceRules[i]
-                        .contactsInside
-                    "
-                    (ruleChange)="
-                      (this.rules.incidenceRules[i]
-                        .contactsInside)
-                    "
+                    [rule]="this.rules.incidenceRules[i].contactsInside"
+                    (ruleChange)="(this.rules.incidenceRules[i].contactsInside)"
                   ></app-contact-rule-edit>
                 </li>
                 <li class="list-group-item">
                   <app-contact-rule-edit
-                    [rule]="
-                      this.rules.incidenceRules[i]
-                        .contactsOutside
-                    "
+                    [rule]="this.rules.incidenceRules[i].contactsOutside"
                     (ruleChange)="
-                      (this.rules.incidenceRules[i]
-                        .contactsOutside)
+                      (this.rules.incidenceRules[i].contactsOutside)
                     "
                   ></app-contact-rule-edit>
+                </li>
+                <li class="list-group-item">
+                  <app-closed-institutions-edit
+                    [rules]="this.rules.closedInstitutions"
+                    (rulesChange)="(this.rules.closedInstitutions)"
+                  ></app-closed-institutions-edit>
+                </li>
+                <li class="list-group-item">
+                  <app-closed-stores-edit
+                    [rules]="this.rules.closedStores"
+                    (rulesChange)="(this.rules.closedStores)"
+                  ></app-closed-stores-edit>
+                </li>
+                <li class="list-group-item">
+                  <app-special-rules-edit
+                    [rule]="this.rules.incidenceRules[i].specialRules"
+                    (ruleChange)="(this.rules.incidenceRules[i].specialRules)"
+                  ></app-special-rules-edit>
+                </li>
+                <li class="list-group-item">
+                  <app-masks-rule-edit
+                    [rule]="this.rules.masks"
+                    (ruleChange)="(this.rules.masks)"
+                  ></app-masks-rule-edit>
                 </li>
               </ul>
             </ng-template>

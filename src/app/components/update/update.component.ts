@@ -10,7 +10,6 @@ import { IncidenceRulesSet, RulesSet, initIncidenceRulesSet, IncidenceValues } f
   styleUrls: ['./update.component.css']
 })
 export class UpdateComponent implements OnInit {
-  test: any;
   states: {};
   selectedState: string;
   rules: RulesSet;
@@ -72,7 +71,7 @@ export class UpdateComponent implements OnInit {
   }
 
   loadStateRule() {
-    this.test = this.firestore.getStateRules(this.selectedState).pipe(
+    this.firestore.getStateRules(this.selectedState).pipe(
       map(doc =>
         ({ id: doc.id, data: <RulesSet>doc.data() })
       )
@@ -87,7 +86,7 @@ export class UpdateComponent implements OnInit {
   }
 
   loadStateIncidenceRuleValues() {
-    this.test = this.firestore.getStateIncidenceValues(this.selectedState).pipe(
+    this.firestore.getStateIncidenceValues(this.selectedState).pipe(
       map(doc =>
         ({ id: doc.id, data: <IncidenceValues>doc.data() })
       )
@@ -101,7 +100,7 @@ export class UpdateComponent implements OnInit {
       }
     });
   }
-  
+
   onStateClicked(state: string) {
     this.router.navigate(['/update'], { queryParams: { state: state } });
     this.updateRoute();

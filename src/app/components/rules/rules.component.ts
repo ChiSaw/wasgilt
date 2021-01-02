@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
+import { FirestoreService } from 'src/app/services/firestore.service';
 import { RulesSet, initIncidenceRulesSet } from 'src/app/interfaces/rules';
 import { ActivatedRoute, Router } from '@angular/router';
+import { map } from 'rxjs/operators';
 import ZipcodesGermany from 'src/assets/zipcodes.de.json';
 
 // Licence: Robert Koch-Institut (RKI), dl-de/by-2-0
@@ -25,7 +27,7 @@ export class RulesComponent implements OnInit {
 
   rules: RulesSet;
 
-  constructor(public api: ApiService, private route: ActivatedRoute, private router: Router) {
+  constructor(public api: ApiService, private firestore: FirestoreService, private route: ActivatedRoute, private router: Router) {
     this.activeIncidenceIndex = 0;
     this.rules = {
       importantAnnouncement: {
@@ -117,6 +119,7 @@ export class RulesComponent implements OnInit {
       this.selectedRSCode = result.rs;
       this.dataStage = 'loaded';
       this.router.navigate(['/'], { queryParams: { verwaltungsid: this.selectedRSCode } });
+      this.loadStateRule(result.areaNameBySide);
     });
   }
 
@@ -194,6 +197,18 @@ export class RulesComponent implements OnInit {
       longitude: 0,
       latitude: 0
     }
+  }
+
+  loadStateRule(state: string) {
+    this.firestore.getStateRules(state).pipe(
+      map(doc =>
+        ({ id: doc.id, data: <RulesSet>doc.data() })
+      )
+    ).subscribe((data) => {
+      if (data != undefined && data.data != undefined && data.data.importantAnnouncement != undefined) {
+        this.rules = data.data;
+      }
+    });
   }
 
   getIncidenceIndex(incidence: number) {
