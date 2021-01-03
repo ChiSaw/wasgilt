@@ -3,7 +3,7 @@
       <img class="mr-3 rule-icon" src="assets/ban-circle-symbol.png" alt="Ban" />
     </div>
     <div class="col-sm-4 my-auto">
-      <p class="my-auto">Ausgangssperre</p>
+      <p *ngIf="this.rule.isBan == true; else noban" class="my-auto"><b>Ausgangssperre!</b></p>
     </div>
     <div class="col-sm-6">
       <div class="row ml-1">
@@ -11,4 +11,8 @@
       </div>
     </div>
   </div>
+<ng-template #noban>
+    <p class="my-auto">Ausgangsbeschränkung</p>
+</ng-template>
+
   

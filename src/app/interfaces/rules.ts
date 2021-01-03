@@ -20,6 +20,7 @@ export interface ClosedInstitution {
 
 export interface GoingOutBan {
     rule: string;
+    isBan: boolean;
 }
 
 export interface ContactsRule {
@@ -72,7 +73,8 @@ export function initIncidenceRulesSet() {
             rule: ''
         },
         goingOutBan: {
-            rule: ''
+            rule: '',
+            isBan: false
         }
     };
 }

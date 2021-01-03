@@ -11,6 +11,7 @@ export class GoingOutBanComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    console.log(this.rule)
   }
 
 }
