@@ -32,6 +32,11 @@ import { SportsRuleComponent } from './components/rules/sports-rule/sports-rule.
 import { SportsRuleEditComponent } from './components/update/sports-rule/sports-rule.component';
 import { TravelRuleComponent } from './components/rules/travel-rule/travel-rule.component';
 import { TravelRuleEditComponent } from './components/update/travel-rule/travel-rule.component';
+import { PartyRulesComponent } from './components/rules/party-rules/party-rules.component';
+import { PartyRulesEditComponent } from './components/update/party-rules/party-rules.component';
+import { CultureRulesComponent } from './components/rules/culture-rules/culture-rules.component';
+import { CultureRulesEditComponent } from './components/update/culture-rules/culture-rules.component';
+
 
 @NgModule({
   declarations: [
@@ -58,6 +63,10 @@ import { TravelRuleEditComponent } from './components/update/travel-rule/travel-
     TravelRuleComponent,
     SportsRuleEditComponent,
     TravelRuleEditComponent,
+    PartyRulesComponent,
+    CultureRulesComponent,
+    PartyRulesEditComponent,
+    CultureRulesEditComponent,
   ],
   imports: [
     BrowserModule,

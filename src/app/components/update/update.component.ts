@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { map } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IncidenceRulesSet, RulesSet, initIncidenceRulesSet, IncidenceValues } from 'src/app/interfaces/rules';
+import { IncidenceRulesSet, RulesSet, initIncidenceRulesSet, checkRulesIntegrity, checkIncidenceRulesIntegrity, IncidenceValues } from 'src/app/interfaces/rules';
 
 @Component({
   selector: 'app-update',
@@ -29,9 +29,10 @@ export class UpdateComponent implements OnInit {
         isMasks: false,
         where: ''
       },
-      closedStores: [{ store: '' }],
-      closedInstitutions: [{ institution: '' }],
-      incidenceRules: [initIncidenceRulesSet()]
+      closedStores: { stores: '', explicitlyOpen: '', remarks: '' },
+      closedInstitutions: { institutions: '', explicitlyOpen: '', remarks: '' },
+      incidenceRules: [initIncidenceRulesSet()],
+      timestamp: Date.now(),
     };
     this.states = {
       'Baden-Württemberg': 'BW',
@@ -77,7 +78,7 @@ export class UpdateComponent implements OnInit {
       )
     ).subscribe((data) => {
       if (data != undefined && data.data != undefined && data.data.importantAnnouncement != undefined) {
-        this.rules = data.data;
+        this.rules = checkRulesIntegrity(data.data);
       } else {
         // Create initial rule array
         this.firestore.storeStateRules(this.selectedState, this.rules);
@@ -107,8 +108,10 @@ export class UpdateComponent implements OnInit {
   }
 
   onUpdateData() {
+    this.rules.timestamp = Date.now();
     this.firestore.storeStateIncidenceValues(this.selectedState, this.incidenceValues);
     this.firestore.storeStateRules(this.selectedState, this.rules);
+    console.log(this.rules)
   }
 
   onIncidenceValuesChange(values: IncidenceValues) {

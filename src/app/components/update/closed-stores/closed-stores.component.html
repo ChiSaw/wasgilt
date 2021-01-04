@@ -1,54 +1,42 @@
 <div class="row">
-    <div class="col-sm-3 my-auto">
+    <div class="col-sm-4 my-auto">
       <p class="mb-0">Geschlossene Geschäfte</p>
     </div>
-    <div
-      class="col-sm-3 input-group"
-      *ngFor="let rule of this.rules; let i = index"
-    >
-      <input
-        type="text"
-        class="form-control"
-        [(ngModel)]="this.rules[i].store"
-        placeholder="Geschäft"
-        aria-label="store"
-        aria-describedby="closed-store"
-        *ngIf="rule.store != ''"
-      />
-      <div class="input-group-append">
-        <button
-          class="btn btn-danger"
-          type="button"
-          *ngIf="rule.store != ''"
-          (click)="this.deleteStore(i)"
-        >
-          X
-        </button>
+    <div class="col-sm-8">
+      <div class="row">
+        <div class="input-group my-auto">
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="rule.stores"
+            placeholder="Geschlossene Geschäfte"
+            aria-label="institutions"
+            aria-describedby="basic-addon1"
+          />
+        </div>
       </div>
-    </div>
-  </div>
-  <div class="row mt-3">
-    <div class="col-sm-3 my-auto">
-      <p class="mb-0">Neue geschlossene Geschäfte</p>
-    </div>
-    <div class="col-sm-9 my-auto">
-      <div class="input-group">
-        <input
-          type="text"
-          class="form-control"
-          [(ngModel)]="this.newValue"
-          placeholder="Geschäft"
-          aria-label="store"
-          aria-describedby="closed-store"
-        />
-        <div class="input-group-append">
-          <button
-            class="btn btn-success"
-            type="button"
-            (click)="this.addStore()"
-          >
-            Hinzufügen
-          </button>
+      <div class="row">
+        <div class="input-group my-auto">
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="rule.explicitlyOpen"
+            placeholder="Explizit geöffnet"
+            aria-label="explicitlyopen"
+            aria-describedby="basic-addon1"
+          />
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-group my-auto">
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="rule.remarks"
+            placeholder="Anmerkungen"
+            aria-label="remarks"
+            aria-describedby="basic-addon1"
+          />
         </div>
       </div>
     </div>

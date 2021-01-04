@@ -1,5 +1,5 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
-import { ClosedStore } from 'src/app/interfaces/rules';
+import { ClosedStores } from 'src/app/interfaces/rules';
 
 @Component({
   selector: 'app-closed-stores-edit',
@@ -7,26 +7,12 @@ import { ClosedStore } from 'src/app/interfaces/rules';
   styleUrls: ['./closed-stores.component.css']
 })
 export class ClosedStoresEditComponent implements OnInit {
-  @Input() rules: ClosedStore[];
-  @Output() rulesChange = new EventEmitter<ClosedStore[]>();
+  @Input() rule: ClosedStores;
+  @Output() ruleChange = new EventEmitter<ClosedStores>();
   newValue: string;
 
-  constructor() { this.newValue = ''; }
+  constructor() {  }
 
   ngOnInit(): void {
-  }
-
-  deleteStore(index: number) {
-    if (index > -1) {
-      this.rules.splice(index, 1);
-    }
-    this.rulesChange.emit(this.rules);
-  }
-
-  addStore() {
-    let newStore: ClosedStore = {store: ''};
-    newStore.store = this.newValue;
-    this.rules.push(newStore);
-    this.rulesChange.emit(this.rules);
   }
 }

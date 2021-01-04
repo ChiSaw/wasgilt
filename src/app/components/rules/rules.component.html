@@ -2,10 +2,28 @@
 
 <ng-container [ngSwitch]="this.dataStage">
   <div *ngSwitchCase="'loaded'">
-    <h4>
-      Regeln für {{ this.incidenceData.areaName }},
-      {{ this.incidenceData.bundesland }}
-    </h4>
+    <div class="row">
+      <div class="col-sm-9">
+        <h4>
+          Regeln für {{ this.incidenceData.areaName }},
+          {{ this.incidenceData.bundesland }}
+        </h4>
+      </div>
+      <div class="col-sm-3 float-right">
+        <a
+          href="/"
+          role="button"
+          class="btn btn-sm btn-outline-info float-right"
+        >
+          Ändern
+      </a>
+      </div>
+    </div>
+    <p><small>
+      Aktualisiert am {{ this.rules.timestamp | date: "dd.MM.YYYY" }} um
+      {{ this.rules.timestamp | date: "HH:mm" }} Uhr
+    </small>
+    </p>
     <ul class="list-group">
       <li class="list-group-item">
         <div class="row">
@@ -16,15 +34,19 @@
             <p class="my-auto">Aktueller Inzidenzwert</p>
           </div>
           <div class="col-sm-6">
-            <p class="my-auto">{{ this.incidenceData.incidence }} (Regeln gelten ab Inzidenz > {{ this.rules.incidenceRules[this.activeIncidenceIndex].fromIncidence.value }}) </p>
+            <p class="my-auto">
+              {{ this.incidenceData.incidence }} (Regeln gelten ab Inzidenz >
+              {{
+                this.rules.incidenceRules[this.activeIncidenceIndex]
+                  .fromIncidence.value
+              }})
+            </p>
           </div>
         </div>
       </li>
       <li class="list-group-item">
         <app-important-announcement
-          [rule]="
-            this.rules.importantAnnouncement
-          "
+          [rule]="this.rules.importantAnnouncement"
         ></app-important-announcement>
       </li>
       <li class="list-group-item">
@@ -50,31 +72,14 @@
       </li>
       <li class="list-group-item">
         <app-closed-institutions
-          [rules]="
-            this.rules.closedInstitutions
-          "
+          [rule]="this.rules.closedInstitutions"
         ></app-closed-institutions>
       </li>
       <li class="list-group-item">
-        <app-closed-stores
-          [rules]="
-            this.rules.closedStores
-          "
-        ></app-closed-stores>
+        <app-closed-stores [rule]="this.rules.closedStores"></app-closed-stores>
       </li>
       <li class="list-group-item">
-        <app-masks-rule
-          [rule]="
-            this.rules.masks
-          "
-        ></app-masks-rule>
-      </li>
-      <li class="list-group-item">
-        <app-special-rules
-          [rule]="
-            this.rules.incidenceRules[this.activeIncidenceIndex].specialRules
-          "
-        ></app-special-rules>
+        <app-masks-rule [rule]="this.rules.masks"></app-masks-rule>
       </li>
       <li class="list-group-item">
         <app-sports-rule
@@ -89,6 +94,27 @@
             this.rules.incidenceRules[this.activeIncidenceIndex].travelRules
           "
         ></app-travel-rule>
+      </li>
+      <li class="list-group-item">
+        <app-party-rules
+          [rule]="
+            this.rules.incidenceRules[this.activeIncidenceIndex].partyRules
+          "
+        ></app-party-rules>
+      </li>
+      <li class="list-group-item">
+        <app-culture-rules
+          [rule]="
+            this.rules.incidenceRules[this.activeIncidenceIndex].cultureRules
+          "
+        ></app-culture-rules>
+      </li>
+      <li class="list-group-item">
+        <app-special-rules
+          [rule]="
+            this.rules.incidenceRules[this.activeIncidenceIndex].specialRules
+          "
+        ></app-special-rules>
       </li>
     </ul>
   </div>

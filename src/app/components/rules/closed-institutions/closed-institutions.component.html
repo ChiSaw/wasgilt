@@ -6,9 +6,15 @@
       <p class="my-auto">Geschlossene Institutionen</p>
     </div>
     <div class="col-sm-6">
-      <div *ngFor="let rule of this.rules" class="row ml-1">
-          <p class="my-auto">{{ rule.institution }}</p>
-      </div>
+        <div class="row ml-1">
+            <p class="my-auto">{{ this.rule.institutions }}</p>
+        </div>
+        <div class="row ml-1" *ngIf="this.rule.explicitlyOpen != ''">
+            <p class="my-auto"><i>Weiterhin offen:</i> {{ this.rule.explicitlyOpen }}</p>
+        </div>
+        <div class="row ml-1"  *ngIf="this.rule.remarks != ''">
+            <p class="my-auto"><i>Info:</i> {{ this.rule.remarks }}</p>
+        </div>
     </div>
   </div>
   

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
-import { RulesSet, initIncidenceRulesSet } from 'src/app/interfaces/rules';
+import { RulesSet, initIncidenceRulesSet, checkRulesIntegrity, checkIncidenceRulesIntegrity } from 'src/app/interfaces/rules';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import ZipcodesGermany from 'src/assets/zipcodes.de.json';
@@ -37,9 +37,10 @@ export class RulesComponent implements OnInit {
         isMasks: false,
         where: ''
       },
-      closedStores: [{ store: '' }],
-      closedInstitutions: [{ institution: '' }],
-      incidenceRules: [initIncidenceRulesSet()]
+      closedStores: { stores: '', explicitlyOpen: '', remarks: '' },
+      closedInstitutions: { institutions: '', explicitlyOpen: '', remarks: '' },
+      incidenceRules: [initIncidenceRulesSet()],
+      timestamp: 0
     };
     this.dataStage = 'initial';
     this.previousDays = 30;
@@ -206,7 +207,7 @@ export class RulesComponent implements OnInit {
       )
     ).subscribe((data) => {
       if (data != undefined && data.data != undefined && data.data.importantAnnouncement != undefined) {
-        this.rules = data.data;
+        this.rules = checkRulesIntegrity(data.data);
       }
     });
   }

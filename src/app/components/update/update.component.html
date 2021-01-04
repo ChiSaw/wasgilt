@@ -98,14 +98,14 @@
                 </li>
                 <li class="list-group-item">
                   <app-closed-institutions-edit
-                    [rules]="this.rules.closedInstitutions"
-                    (rulesChange)="(this.rules.closedInstitutions)"
+                    [rule]="this.rules.closedInstitutions"
+                    (ruleChange)="(this.rules.closedInstitutions)"
                   ></app-closed-institutions-edit>
                 </li>
                 <li class="list-group-item">
                   <app-closed-stores-edit
-                    [rules]="this.rules.closedStores"
-                    (rulesChange)="(this.rules.closedStores)"
+                    [rule]="this.rules.closedStores"
+                    (ruleChange)="(this.rules.closedStores)"
                   ></app-closed-stores-edit>
                 </li>
                 <li class="list-group-item">
@@ -113,12 +113,6 @@
                     [rule]="this.rules.incidenceRules[i].specialRules"
                     (ruleChange)="(this.rules.incidenceRules[i].specialRules)"
                   ></app-special-rules-edit>
-                </li>
-                <li class="list-group-item">
-                  <app-masks-rule-edit
-                    [rule]="this.rules.masks"
-                    (ruleChange)="(this.rules.masks)"
-                  ></app-masks-rule-edit>
                 </li>
                 <li class="list-group-item">
                   <app-sports-rule-edit
@@ -132,6 +126,25 @@
                     (ruleChange)="(this.rules.incidenceRules[i].travelRules)"
                   ></app-travel-rule-edit>
                 </li>
+                <li class="list-group-item">
+                  <app-party-rules-edit
+                    [rule]="this.rules.incidenceRules[i].partyRules"
+                    (ruleChange)="(this.rules.incidenceRules[i].partyRules)"
+                  ></app-party-rules-edit>
+                </li>
+                <li class="list-group-item">
+                  <app-culture-rules-edit
+                    [rule]="this.rules.incidenceRules[i].cultureRules"
+                    (ruleChange)="(this.rules.incidenceRules[i].cultureRules)"
+                  ></app-culture-rules-edit>
+                </li>
+                <li class="list-group-item">
+                  <app-masks-rule-edit
+                    [rule]="this.rules.masks"
+                    (ruleChange)="(this.rules.masks)"
+                  ></app-masks-rule-edit>
+                </li>
+
               </ul>
             </ng-template>
           </li>

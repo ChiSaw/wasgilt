@@ -9,8 +9,8 @@
     <div class="row ml-1">
         <p class="my-auto">{{ this.rule.contactsNumber }}</p>
     </div>
-    <div class="row ml-1">
-        <p class="my-auto">{{ this.rule.remarks }}</p>
+    <div class="row ml-1" *ngIf="this.rule.remarks != ''">
+      <p class="my-auto"><i>Info:</i> {{ this.rule.remarks }}</p>
     </div>
   </div>
 </div>

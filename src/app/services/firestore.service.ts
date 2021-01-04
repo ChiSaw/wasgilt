@@ -16,7 +16,7 @@ export class FirestoreService {
     return this.firestore.collection(DATABASE + '/states/' + state).doc('rules').get();
   }
   storeStateRules(state: string, rules: RulesSet) {
-    return this.firestore.collection(DATABASE + '/states/' + state). doc('rules').set(rules);
+    return this.firestore.collection(DATABASE + '/states/' + state).doc('rules').set(rules);
   }
 
   getStateIncidenceValues(state: string) {
