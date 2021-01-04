@@ -10,6 +10,14 @@ export interface SpecialRules {
     rule: string;
 }
 
+export interface SportsRules {
+    rule: string;
+}
+
+export interface TravelRules {
+    rule: string;
+}
+
 export interface ClosedStore {
     store: string;
 }
@@ -42,6 +50,8 @@ export interface IncidenceRulesSet {
     contactsInside: ContactsRule;
     contactsOutside: ContactsRule;
     specialRules: SpecialRules;
+    sportsRules: SportsRules;
+    travelRules: TravelRules;
     fromIncidence: FromIncidence;
     goingOutBan: GoingOutBan;
 };
@@ -75,6 +85,12 @@ export function initIncidenceRulesSet() {
         goingOutBan: {
             rule: '',
             isBan: false
+        },
+        sportsRules: {
+            rule: ''
+        },
+        travelRules: {
+            rule: ''
         }
     };
 }

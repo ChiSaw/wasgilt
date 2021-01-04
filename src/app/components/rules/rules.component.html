@@ -76,6 +76,20 @@
           "
         ></app-special-rules>
       </li>
+      <li class="list-group-item">
+        <app-sports-rule
+          [rule]="
+            this.rules.incidenceRules[this.activeIncidenceIndex].sportsRules
+          "
+        ></app-sports-rule>
+      </li>
+      <li class="list-group-item">
+        <app-travel-rule
+          [rule]="
+            this.rules.incidenceRules[this.activeIncidenceIndex].travelRules
+          "
+        ></app-travel-rule>
+      </li>
     </ul>
   </div>
 

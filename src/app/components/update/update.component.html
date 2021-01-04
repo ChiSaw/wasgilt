@@ -120,6 +120,18 @@
                     (ruleChange)="(this.rules.masks)"
                   ></app-masks-rule-edit>
                 </li>
+                <li class="list-group-item">
+                  <app-sports-rule-edit
+                    [rule]="this.rules.incidenceRules[i].sportsRules"
+                    (ruleChange)="(this.rules.incidenceRules[i].sportsRules)"
+                  ></app-sports-rule-edit>
+                </li>
+                <li class="list-group-item">
+                  <app-travel-rule-edit
+                    [rule]="this.rules.incidenceRules[i].travelRules"
+                    (ruleChange)="(this.rules.incidenceRules[i].travelRules)"
+                  ></app-travel-rule-edit>
+                </li>
               </ul>
             </ng-template>
           </li>

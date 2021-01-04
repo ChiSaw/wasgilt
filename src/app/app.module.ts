@@ -28,6 +28,11 @@ import { MasksRuleComponent } from './components/rules/masks-rule/masks-rule.com
 import { MasksRuleEditComponent } from './components/update/masks-rule/masks-rule.component';
 import { KeysPipe } from './components/update/update.pipe';
 import { IncidenceValuesComponent } from './components/update/incidence-values/incidence-values.component';
+import { SportsRuleComponent } from './components/rules/sports-rule/sports-rule.component';
+import { SportsRuleEditComponent } from './components/update/sports-rule/sports-rule.component';
+import { TravelRuleComponent } from './components/rules/travel-rule/travel-rule.component';
+import { TravelRuleEditComponent } from './components/update/travel-rule/travel-rule.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,6 +54,10 @@ import { IncidenceValuesComponent } from './components/update/incidence-values/i
     GoingOutBanEditComponent,
     ImportantAnnouncementEditComponent,
     MasksRuleEditComponent,
+    SportsRuleComponent,
+    TravelRuleComponent,
+    SportsRuleEditComponent,
+    TravelRuleEditComponent,
   ],
   imports: [
     BrowserModule,
