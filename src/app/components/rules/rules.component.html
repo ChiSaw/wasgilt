@@ -3,19 +3,18 @@
 <ng-container [ngSwitch]="this.dataStage">
   <div *ngSwitchCase="'loaded'">
     <div class="row">
-      <div class="col-sm-9">
-        <h4>
+      <div class="col-sm">
+        <h4 class="d-inline">
           Regeln für {{ this.incidenceData.areaName }},
           {{ this.incidenceData.bundesland }}
         </h4>
-      </div>
-      <div class="col-sm-3 float-right">
         <a
           href="/"
           role="button"
-          class="btn btn-sm btn-outline-info float-right"
+          class="btn btn-sm btn-outline-info d-inline ml-2 my-auto"
         >
-          Ändern
+        <small>Ändern
+        </small>
       </a>
       </div>
     </div>
@@ -24,11 +23,10 @@
       {{ this.rules.timestamp | date: "HH:mm" }} Uhr
     </small>
     </p>
-    <ul class="list-group">
-      <li class="list-group-item">
+      <div class="card card-body border-light shadow-sm mt-1">
         <div class="row">
           <div class="col-sm-1 my-auto">
-            <p class="my-auto">RKI</p>
+            <img class="mr-3 rule-icon" src="assets/rki.png" alt="RKI" />
           </div>
           <div class="col-sm-4 my-auto">
             <p class="my-auto">Aktueller Inzidenzwert</p>
@@ -43,80 +41,80 @@
             </p>
           </div>
         </div>
-      </li>
-      <li class="list-group-item">
+      </div>
+      <div class="card card-body border-light shadow-sm mt-1">
         <app-important-announcement
           [rule]="this.rules.importantAnnouncement"
         ></app-important-announcement>
-      </li>
-      <li class="list-group-item">
+      </div>
+      <div class="card card-body border-light shadow-sm mt-1">
         <app-going-out-ban
           [rule]="
             this.rules.incidenceRules[this.activeIncidenceIndex].goingOutBan
           "
         ></app-going-out-ban>
-      </li>
-      <li class="list-group-item">
+      </div>
+      <div class="card card-body border-light shadow-sm mt-1">
         <app-contact-rule
           [rule]="
             this.rules.incidenceRules[this.activeIncidenceIndex].contactsInside
           "
         ></app-contact-rule>
-      </li>
-      <li class="list-group-item">
+      </div>
+      <div class="card card-body border-light shadow-sm mt-1">
         <app-contact-rule
           [rule]="
             this.rules.incidenceRules[this.activeIncidenceIndex].contactsOutside
           "
         ></app-contact-rule>
-      </li>
-      <li class="list-group-item">
+      </div>
+      <div class="card card-body border-light shadow-sm mt-1">
         <app-closed-institutions
           [rule]="this.rules.closedInstitutions"
         ></app-closed-institutions>
-      </li>
-      <li class="list-group-item">
+      </div>
+      <div class="card card-body border-light shadow-sm mt-1">
         <app-closed-stores [rule]="this.rules.closedStores"></app-closed-stores>
-      </li>
-      <li class="list-group-item">
+      </div>
+      <div class="card card-body border-light shadow-sm mt-1">
         <app-masks-rule [rule]="this.rules.masks"></app-masks-rule>
-      </li>
-      <li class="list-group-item">
+      </div>
+      <div class="card card-body border-light shadow-sm mt-1">
         <app-sports-rule
           [rule]="
             this.rules.incidenceRules[this.activeIncidenceIndex].sportsRules
           "
         ></app-sports-rule>
-      </li>
-      <li class="list-group-item">
+      </div>
+      <div class="card card-body border-light shadow-sm mt-1">
         <app-travel-rule
           [rule]="
             this.rules.incidenceRules[this.activeIncidenceIndex].travelRules
           "
         ></app-travel-rule>
-      </li>
-      <li class="list-group-item">
+      </div>
+      <div class="card card-body border-light shadow-sm mt-1">
         <app-party-rules
           [rule]="
             this.rules.incidenceRules[this.activeIncidenceIndex].partyRules
           "
         ></app-party-rules>
-      </li>
-      <li class="list-group-item">
+      </div>
+      <div class="card card-body border-light shadow-sm mt-1">
         <app-culture-rules
           [rule]="
             this.rules.incidenceRules[this.activeIncidenceIndex].cultureRules
           "
         ></app-culture-rules>
-      </li>
-      <li class="list-group-item">
+      </div>
+      <div class="card card-body border-light shadow-sm mt-1">
         <app-special-rules
           [rule]="
             this.rules.incidenceRules[this.activeIncidenceIndex].specialRules
           "
         ></app-special-rules>
-      </li>
-    </ul>
+      </div>
+
   </div>
 
   <div *ngSwitchCase="'initial'">
