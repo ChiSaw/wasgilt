@@ -6,6 +6,7 @@ import { RulesComponent } from './components/rules/rules.component';
 
 const routes: Routes = [
   { path: 'update', component: UpdateComponent },
+  { path: ':plz', component: RulesComponent },
   { path: '**', component: RulesComponent },
 ];
 @NgModule({

@@ -69,8 +69,17 @@ export class RulesComponent implements OnInit {
   }
 
   updateRoute() {
+    if(this.route.snapshot.paramMap.has('plz')) {
+      let plz = this.route.snapshot.paramMap.get('plz');
+      let plzNumber = Number(plz);
+      if(plzNumber > 0 && plzNumber < 99999) {
+        this.plz = plz;
+        this.onPLZClick();
+      }
+    }
     this.route.queryParamMap
       .subscribe((params) => {
+        console.log(params)
         if (params.has('verwaltungsid') && this.selectedRSCode != params.get('verwaltungsid')) {
           this.selectedRSCode = params.get('verwaltungsid');
           let data = this.getCityDataFromRS(this.selectedRSCode);
@@ -87,6 +96,7 @@ export class RulesComponent implements OnInit {
             this.loadData(location);
           }          
           console.log('New community: ' + params.get('verwaltungsid'))
+
         }
       })
   }
@@ -97,7 +107,7 @@ export class RulesComponent implements OnInit {
     this.loadData(location);
   }
 
-  onPLZClick(event: Event) {
+  onPLZClick() {
     let data = this.getCityDataFromZip(this.plz);
     if (data.community_code != "-1") {
       let location: Coordinates = {
@@ -208,6 +218,7 @@ export class RulesComponent implements OnInit {
     ).subscribe((data) => {
       if (data != undefined && data.data != undefined && data.data.importantAnnouncement != undefined) {
         this.rules = checkRulesIntegrity(data.data);
+        this.activeIncidenceIndex = this.getIncidenceIndex(this.incidenceData.incidence);
       }
     });
   }

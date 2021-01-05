@@ -126,6 +126,9 @@ export class UpdateComponent implements OnInit {
         this.rules.incidenceRules.slice(currentLength, 1);
       }
     }
+    for(let i = 0; i < this.incidenceValues.values.length; i++) {
+      this.rules.incidenceRules[i].fromIncidence.value = this.incidenceValues.values[i];
+    }
   }
 
   swap(json) {
