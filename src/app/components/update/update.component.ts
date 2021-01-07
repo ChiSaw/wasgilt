@@ -32,6 +32,7 @@ export class UpdateComponent implements OnInit {
       closedStores: { stores: '', explicitlyOpen: '', remarks: '' },
       closedInstitutions: { institutions: '', explicitlyOpen: '', remarks: '' },
       incidenceRules: [initIncidenceRulesSet()],
+      stateCommunityRules: { communities: [{community: '', rules: ''}]},
       timestamp: Date.now(),
     };
     this.states = {

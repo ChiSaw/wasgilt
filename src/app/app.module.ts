@@ -36,6 +36,9 @@ import { PartyRulesComponent } from './components/rules/party-rules/party-rules.
 import { PartyRulesEditComponent } from './components/update/party-rules/party-rules.component';
 import { CultureRulesComponent } from './components/rules/culture-rules/culture-rules.component';
 import { CultureRulesEditComponent } from './components/update/culture-rules/culture-rules.component';
+import { CommunityRulesComponent } from './components/rules/community-rules/community-rules.component';
+import { CommunityRulesEditComponent } from './components/update/community-rules/community-rules.component';
+import { ImpressumComponent } from './components/impressum/impressum.component';
 
 
 @NgModule({
@@ -67,6 +70,9 @@ import { CultureRulesEditComponent } from './components/update/culture-rules/cul
     CultureRulesComponent,
     PartyRulesEditComponent,
     CultureRulesEditComponent,
+    CommunityRulesComponent,
+    CommunityRulesEditComponent,
+    ImpressumComponent,
   ],
   imports: [
     BrowserModule,

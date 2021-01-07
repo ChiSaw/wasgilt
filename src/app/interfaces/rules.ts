@@ -57,6 +57,15 @@ export interface IncidenceValues {
     values: number[];
 };
 
+export interface CommunityRules {
+    community: string;
+    rules: string;
+}
+
+export interface StateCommunityRules {
+    communities: CommunityRules[];
+}
+
 export interface IncidenceRulesSet {
     contactsInside: ContactsRule;
     contactsOutside: ContactsRule;
@@ -75,6 +84,7 @@ export interface RulesSet {
     closedStores: ClosedStores;
     closedInstitutions: ClosedInstitutions;
     incidenceRules: Array<IncidenceRulesSet>;
+    stateCommunityRules: StateCommunityRules;
     timestamp: Number;
 };
 
@@ -160,6 +170,14 @@ export function checkRulesIntegrity(rules: RulesSet) {
 
     if (rules.masks == undefined) {
         rules.masks = { isMasks: false, where: '' };
+    }
+
+    if (rules.stateCommunityRules == undefined) {
+        rules.stateCommunityRules = { communities: [{community: '', rules: ''}]};
+    }
+    
+    if (rules.stateCommunityRules.communities == undefined) {
+        rules.stateCommunityRules.communities = [{community: '', rules: ''}];
     }
 
     if (rules.incidenceRules == undefined) {

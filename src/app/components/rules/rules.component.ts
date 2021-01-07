@@ -40,6 +40,7 @@ export class RulesComponent implements OnInit {
       closedStores: { stores: '', explicitlyOpen: '', remarks: '' },
       closedInstitutions: { institutions: '', explicitlyOpen: '', remarks: '' },
       incidenceRules: [initIncidenceRulesSet()],
+      stateCommunityRules: { communities: [{community: '', rules: ''}]},
       timestamp: 0
     };
     this.dataStage = 'initial';
